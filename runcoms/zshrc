@@ -12,3 +12,59 @@ fi
 
 # Customize to your needs...
 
+# Syntax highlighting
+ZSH_HIGHLIGHT_STYLES[alias]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[command]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[path]='fg=blue'
+
+# Options
+setopt CHECK_JOBS
+setopt CLOBBER
+setopt HUP
+unsetopt SHARE_HISTORY
+
+# Aliases
+alias cp='nocorrect cp'
+alias rm='nocorrect rm'
+alias mv='nocorrect mv'
+
+alias gsr='git svn rebase'
+alias gsd='git svn dcommit --rmdir'
+
+alias make='make -j 2'
+
+alias mysqlstart="sudo /opt/local/bin/mysqld_safe5"
+alias mysqlstop="/opt/local/bin/mysqladmin5 -u root -p shutdown"
+
+alias postgres-restart="sudo -u postgres /Library/PostgreSQL/9.0/bin/pg_ctl -D /Library/PostgreSQL/9.0/data restart"
+alias postgres-kill="ps -A | grep postgres | cut -f 1 -d ' ' | xargs sudo kill"
+
+if ! (type -p netcat > /dev/null); then
+    alias netcat=nc
+fi
+
+# Completion
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' \
+    'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+zstyle ':completion:*:*:open:*' ignored-patterns '*?.bib' '*?.aux' '*?.bbl' \
+    '*?.bcf' '*?.blg' '*?.log' '*?.out' '*?.xml' '*?.synctex.gz' '*?.tex'
+
+
+# Keys
+bindkey -M viins -r 'jk'
+bindkey -M viins -r 'kj'
+bindkey -M vicmd 'gg' beginning-of-history
+bindkey -M vicmd 'g~' vi-oper-swap-case
+bindkey -M viins "$key_info[Control]S" prepend-sudo
+bindkey -M viins "$key_info[Control]N" accept-and-infer-next-history
+bindkey -M viins "$key_info[Control]A" beginning-of-line
+bindkey -M viins "$key_info[Control]E" end-of-line
+bindkey -M viins "$key_info[Control]U" kill-whole-line
+
+zmodload zsh/complist # To be able to access menuselect keymap
+bindkey -M menuselect '^o' accept-and-infer-next-history
+
+lesskey ~/.zprezto/lesskey
+
