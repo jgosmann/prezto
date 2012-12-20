@@ -1,0 +1,54 @@
+
+function prompt_jgosmann_precmd {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+
+  if (( $+functions[git-info] )); then
+    git-info
+  fi
+}
+
+function prompt_jgosmann_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  autoload -Uz add-zsh-hook
+  add-zsh-hook precmd prompt_jgosmann_precmd
+
+  zstyle ':prezto:module:editor:info:completing' format '%B%F{red}...%f%b'
+  zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format '%S'
+  zstyle ':prezto:module:editor:info:keymap:alternate' format '%U'
+
+  zstyle ':prezto:module:git:info:added' format '%F{yellow}'
+  zstyle ':prezto:module:git:info:ahead' format '↑'
+  zstyle ':prezto:module:git:info:behind' format '↓'
+  zstyle ':prezto:module:git:info:branch' format '%b'
+  zstyle ':prezto:module:git:info:clean' format '%F{green}'
+  zstyle ':prezto:module:git:info:dirty' format '%F{red}'
+  zstyle ':prezto:module:git:info:renamed' format '%F{yellow}'
+
+  zstyle ':prezto:module:git:info:action' format '%F{magenta}%s%f'
+  zstyle ':prezto:module:git:info:unmerged' format '%F{magenta}(%U)%f'
+  zstyle ':prezto:module:git:info:stashed' format '%F{magenta}✭%f'
+  zstyle ':prezto:module:git:info:untracked' format '%F{magenta}?%f'
+  zstyle ':prezto:module:git:info:commit' format '%F{blue}%c%f'
+
+  zstyle ':prezto:module:git:info:remote' format '%R'
+  zstyle ':prezto:module:git:info:deleted' format 'd'
+  zstyle ':prezto:module:git:info:modified' format 'm'
+  # Ignore submodule when it is 'dirty', 'untracked', 'all', or 'none'.
+  zstyle ':prezto:module:git:status:ignore' submodules ''
+
+  zstyle ':prezto:module:git:info:keys' format \
+    'prompt'   '%C%D%r%a%b' \
+    'rprompt'  '%s%U %S%u %10>>%c' \
+    'position' '%A%B'
+
+  PROMPT='${editor_info[keymap]}${editor_info[overwrite]}%m:%F{blue}%1~%f${git_info:+${${git_info[position]/↑↓/↕}:-|}${(e)git_info[prompt]}}%{%(?.%F{green}.%F{red})%}%(!.#.>)%f%s%u '
+  RPROMPT='%(?..%F{red}%?%f )${git_info:+${git_info[rprompt]}}'
+  SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+}
+
+prompt_jgosmann_setup "$@"
+
