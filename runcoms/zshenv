@@ -17,8 +17,8 @@ fi
 # Editors
 #
 
-export EDITOR='nano'
-export VISUAL='nano'
+export EDITOR='vim'
+export VISUAL='vim'
 export PAGER='less'
 
 #
@@ -49,6 +49,8 @@ fi
 
 typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
+typeset -gUT CPATH cpath
+typeset -gUT LIBRARY_PATH library_path
 
 # Set the the list of directories that cd searches.
 # cdpath=(
@@ -64,6 +66,7 @@ infopath=(
 
 # Set the list of directories that man searches for manuals.
 manpath=(
+  /opt/local/share/man
   /usr/local/share/man
   /usr/share/man
   $manpath
@@ -76,16 +79,29 @@ unset path_file
 
 # Set the list of directories that Zsh searches for programs.
 path=(
+  /opt/local/{bin,sbin}
   /usr/local/{bin,sbin}
   /usr/{bin,sbin}
   /{bin,sbin}
   $path
+  ~/bin
 )
 
 for path_file in /etc/paths.d/*(.N); do
   path+=($(<$path_file))
 done
 unset path_file
+
+case `uname` in
+    *Darwin*)
+        export ARDUINO_DIR='/Applications/Arduino.app/Contents/Resources/Java'
+        export ARDMK_DIR='~/bin/Arduino-Makefile'
+        path=($path ~/bin/Arduino-Makefile/bin)
+        ;;
+esac
+
+cpath=(/opt/local/include $cpath)
+library_path=(/opt/local/lib $library_path)
 
 #
 # Temporary Files
