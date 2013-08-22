@@ -1,7 +1,8 @@
 Git
 ===
 
-Enhances the [Git][1] distributed version control system by providing aliases, functions and by exposing repository status information to prompts.
+Enhances the [Git][1] distributed version control system by providing aliases,
+functions and by exposing repository status information to prompts.
 
 Git **1.7.2** is the [minimum required version][7].
 
@@ -12,7 +13,7 @@ Settings
 
 The format of the [git-log][8] output is configurable via the following style,
 where context is *brief*, *oneline*, and *medium*, which will be passed to the
-`--prety=format:` switch.
+`--pretty=format:` switch.
 
     zstyle ':prezto:module:git:log:context' format ''
 
@@ -38,8 +39,8 @@ Aliases
   - `gbc` creates a new branch.
   - `gbl` lists branches and their commits.
   - `gbL` lists local and remote branches and their commits.
-  - `gbs` lists branches and their commits with ancestery graphs.
-  - `gbS` lists local and remote branches and their commits with ancestery
+  - `gbs` lists branches and their commits with ancestry graphs.
+  - `gbS` lists local and remote branches and their commits with ancestry
     graphs.
   - `gbx` deletes a branch.
   - `gbX` deletes a branch irrespective of its merged status.
@@ -53,16 +54,27 @@ Aliases
   - `gca` stages all modified and deleted files.
   - `gcm` records changes to the repository with the given message.
   - `gco` checks out a branch or paths to work tree.
-  - `gcO` checks out paths to work tree using the *HEAD* commit.
+  - `gcO` checks out hunks from the index or the tree interactively.
   - `gcf` amends the tip of the current branch using the same log message as
     *HEAD*.
+  - `gcF` amends the tip of the current branch.
   - `gcp` applies changes introduced by existing commits.
   - `gcP` applies changes introduced by existing commits without committing.
   - `gcr` reverts existing commits by reverting patches and recording new
      commits.
   - `gcR` removes the *HEAD* commit.
   - `gcs` displays various types of objects.
-  - `gcl` displays lost commits.
+  - `gcl` lists lost commits.
+
+### Conflict
+
+  - `gCl` lists unmerged files.
+  - `gCa` adds unmerged file contents to the index.
+  - `gCe` executes merge-tool on all unmerged file.
+  - `gCo` checks out our changes for unmerged paths.
+  - `gCO` checks out our changes for all unmerged paths.
+  - `gCt` checks out their changes for unmerged paths.
+  - `gCT` checks out their changes for all unmerged paths.
 
 ### Data
 
@@ -85,8 +97,8 @@ Aliases
 
   - `gg` displays lines matching a pattern.
   - `ggi` displays lines matching a pattern ignoring case.
-  - `ggl` displays files matching a pattern.
-  - `ggL` displays files are not matching a pattern.
+  - `ggl` lists files matching a pattern.
+  - `ggL` lists files that are not matching a pattern.
   - `ggv` displays lines not matching a pattern.
   - `ggw` displays lines matching a pattern at word boundary.
 
@@ -97,20 +109,10 @@ Aliases
   - `giu` adds file contents to the index (updates only known files).
   - `gid` displays changes between the index and a named commit (diff).
   - `giD` displays changes between the index and a named commit (word diff).
-  - `gir` resets current HEAD to the specified state.
-  - `giR` resets current index to the specified state.
+  - `gir` resets the current HEAD to the specified state.
+  - `giR` resets the current index interactively.
   - `gix` removes files/directories from the index (recursively).
   - `giX` removes files/directories from the index (recursively and forced).
-
-### Conflict
-
-  - `gCl` lists unmerged files.
-  - `gCa` adds unmerged file contents to the index.
-  - `gCe` executes merge-tool on all unmerged file.
-  - `gCo` checks out our changes for unmerged paths.
-  - `gCO` checks out our changes for all unmerged paths.
-  - `gCt` checks out their changes for unmerged paths.
-  - `gCT` checks out their changes for all unmerged paths.
 
 ### Log
 
@@ -153,12 +155,12 @@ Aliases
 ### Remote
 
   - `gR` manages tracked repositories.
-  - `gRl` displays remote names and URLs.
+  - `gRl` lists remote names and their URLs.
   - `gRa` adds a new remote.
   - `gRx` removes a remote.
   - `gRm` renames a remote.
   - `gRu` fetches remotes updates.
-  - `gRc` deletes all stale remote tracking branches.
+  - `gRp` prunes all stale remote tracking branches.
   - `gRs` displays information about a given remote.
   - `gRb` opens a remote on [GitHub][3] in the default browser.
 
@@ -168,10 +170,9 @@ Aliases
   - `gsa` applies the changes recorded in a stash to the working directory.
   - `gsx` drops a stashed state.
   - `gsX` drops all the stashed states.
-  - `gsd` lists dropped stashed states.
   - `gsl` lists stashed states.
-  - `gsL` displays the changes recorded in the stash as a diff between the
-    stashed state and its original parent.
+  - `gsL` lists dropped stashed states.
+  - `gsd` displays changes between the stash and its original parent.
   - `gsp` removes and applies a single stashed state from the stash list.
   - `gsr` recovers a given stashed state.
   - `gss` stashes the changes of the dirty working directory, including untracked.
@@ -251,19 +252,38 @@ setting a style is as follows.
 | Name      | Format Code | Description
 | --------- | :---------: | ---------------------------------------------------
 | action    |     %s      | Special action name
-| added     |     %a      | Added files count
 | ahead     |     %A      | Commits ahead of remote count
 | behind    |     %B      | Commits behind of remote count
 | branch    |     %b      | Branch name
 | commit    |     %c      | Commit hash
+| position  |     %p      | Commits from the nearest tag count
+| remote    |     %R      | Remote name
+| stashed   |     %S      | Stashed states count
+
+### Concise Contexts
+
+| Name      | Format Code | Description
+| --------- | :---------: | ---------------------------------------------------
+| clean     |     %C      | Clean state
+| dirty     |     %D      | Dirty files count
+| indexed   |     %i      | Indexed files count
+| unindexed |     %I      | Unindexed files count
+| untracked |     %u      | Untracked files count
+
+The following contexts must be enabled with the following zstyle:
+
+    zstyle ':prezto:module:git:info' verbose 'yes'
+
+### Verbose Contexts
+
+| Name      | Format Code | Description
+| --------- | :---------: | ---------------------------------------------------
+| added     |     %a      | Added files count
 | clean     |     %C      | Clean state
 | deleted   |     %d      | Deleted files count
 | dirty     |     %D      | Dirty files count
 | modified  |     %m      | Modified files count
-| position  |     %p      | Commits from the nearest tag count
-| remote    |     %R      | Remote name
 | renamed   |     %r      | Renamed files count
-| stashed   |     %S      | Stashed states count
 | unmerged  |     %U      | Unmerged files count
 | untracked |     %u      | Untracked files count
 
@@ -292,7 +312,7 @@ Second, format how the above attributes are displayed in prompts.
       'prompt'  ' git(%b)' \
       'rprompt' '[%R]'
 
-Last, add `$git_info[prompt]` to `$PROMPT` and `$git_info[prompt]` to
+Last, add `$git_info[prompt]` to `$PROMPT` and `$git_info[rprompt]` to
 `$RPROMPT` respectively and call `git-info` in the `prompt_name_preexec` hook
 function.
 

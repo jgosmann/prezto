@@ -4,42 +4,6 @@
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
-# Usage:
-#   To enable key bindings, add the following to zpreztorc, and replace 'map'
-#   with 'emacs' or 'vi.
-#
-#     zstyle ':prezto:module:editor' keymap 'map'
-#
-#   To enable the auto conversion of .... to ../.., add the following to
-#   zpreztorc.
-#
-#     zstyle ':prezto:module:editor' dot-expansion 'yes'
-#
-#   To indicate when the editor is in the primary keymap (emacs or viins), add
-#   the following to your theme prompt setup function.
-#
-#     zstyle ':prezto:module:editor:info:keymap:primary' format '>>>'
-#
-#   To indicate when the editor is in the primary keymap (emacs or viins) insert
-#   mode, add the following to your theme prompt setup function.
-#
-#     zstyle ':prezto:module:editor:info:keymap:primary:insert' format 'I'
-#
-#   To indicate when the editor is in the primary keymap (emacs or viins)
-#   overwrite mode, add the following to your theme prompt setup function.
-#
-#     zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format 'O'
-#
-#   To indicate when the editor is in the alternate keymap (vicmd), add the
-#   following to your theme prompt setup function.
-#
-#     zstyle ':prezto:module:editor:info:keymap:alternate' format '<<<'
-#
-#   To indicate when the editor is completing, add the following to your theme
-#   prompt setup function.
-#
-#     zstyle ':prezto:module:editor:info:completing' format '...'
-#
 
 # Return if requirements are not found.
 if [[ "$TERM" == 'dumb' ]]; then
@@ -56,6 +20,9 @@ setopt BEEP
 #
 # Variables
 #
+
+# Treat these characters as part of a word.
+WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
 
 # Use human-friendly identifiers.
 zmodload zsh/terminfo
@@ -90,12 +57,11 @@ key_info=(
   'BackTab'   "$terminfo[kcbt]"
 )
 
-# Do not bind any keys if there are empty values in $key_info.
+# Set empty $key_info values to an invalid UTF-8 sequence to induce silent
+# bindkey failure.
 for key in "${(k)key_info[@]}"; do
   if [[ -z "$key_info[$key]" ]]; then
-    print "prezto: one or more keys are non-bindable" >&2
-    unset key{,_info}
-    return 1
+    key_info["$key"]='�'
   fi
 done
 
@@ -270,10 +236,6 @@ bindkey -M vicmd "v" edit-command-line
 bindkey -M vicmd "u" undo
 bindkey -M vicmd "$key_info[Control]R" redo
 
-# Switch to command mode.
-bindkey -M viins "jk" vi-cmd-mode
-bindkey -M viins "kj" vi-cmd-mode
-
 if (( $+widgets[history-incremental-pattern-search-backward] )); then
   bindkey -M vicmd "?" history-incremental-pattern-search-backward
   bindkey -M vicmd "/" history-incremental-pattern-search-forward
@@ -344,14 +306,14 @@ fi
 #
 
 # Set the key layout.
-zstyle -s ':prezto:module:editor' keymap 'keymap'
-if [[ "$keymap" == (emacs|) ]]; then
+zstyle -s ':prezto:module:editor' key-bindings 'key_bindings'
+if [[ "$key_bindings" == (emacs|) ]]; then
   bindkey -e
-elif [[ "$keymap" == vi ]]; then
+elif [[ "$key_bindings" == vi ]]; then
   bindkey -v
 else
-  print "prezto: invalid keymap: $keymap" >&2
+  print "prezto: editor: invalid key bindings: $key_bindings" >&2
 fi
 
-unset key{map,}
+unset key{,map,bindings}
 

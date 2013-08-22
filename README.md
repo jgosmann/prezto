@@ -33,25 +33,6 @@ version is 4.3.10.
 
   5. Open a new Zsh terminal window or tab.
 
-### Mac OS X
-
-If you have administrator privileges, you must fix an Apple-introduced problem
-in Mac OS X 10.5 Leopard by executing the following command, or BASH and Zsh
-will have the wrong `PATH` when executed non-interactively.
-
-    sudo chmod ugo-x /usr/libexec/path_helper
-
-`path_helper` is intended to make it easier for installers to add new paths to
-the environment without having to edit shell configuration files by adding
-a file with a path to the */etc/paths.d* directory.
-
-Unfortunately, `path_helper` always reads paths from */etc/paths* set by Apple
-then paths from */etc/paths.d* set by third party installers, and lastly paths
-from the `PATH` environment variable set by the parent process, which
-ultimately is set by the user with `export PATH=...` Thus, it reorders path
-priorities, and user */bin* directories meant to override system */bin*
-directories end up at the tail of the array.
-
 ### Troubleshooting
 
 If you are not able to find certain commands after switching to *Prezto*,
@@ -82,9 +63,10 @@ accompanying README files to learn of what is available.
 Customization
 -------------
 
-The project is managed via [Git][3]. It is highly recommend that you commit
-your changes and push them to [GitHub][4] to not lose them. If you do not know
-how to use Git, follow this [tutorial][5] and bookmark this [reference][6].
+The project is managed via [Git][3]. It is highly recommended that you fork this
+project; so, that you can commit your changes and push them to [GitHub][4] to
+not lose them. If you do not know how to use Git, follow this [tutorial][5] and
+bookmark this [reference][6].
 
 Resources
 ---------
