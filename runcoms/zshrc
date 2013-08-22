@@ -40,6 +40,7 @@ alias mysqlstop="/opt/local/bin/mysqladmin5 -u root --password='' shutdown"
 alias postgres-restart="sudo -u postgres /Library/PostgreSQL/9.0/bin/pg_ctl -D /Library/PostgreSQL/9.0/data restart"
 alias postgres-kill="ps -A | grep postgres | cut -f 1 -d ' ' | xargs sudo kill"
 
+alias sll='smt list -l | less'
 
 if ! (type -p netcat > /dev/null); then
     alias netcat=nc
