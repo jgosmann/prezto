@@ -20,6 +20,8 @@ function prompt_jgosmann_setup {
   zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format '%S'
   zstyle ':prezto:module:editor:info:keymap:alternate' format '%U'
 
+  zstyle ':prezto:module:git:info' verbose 'yes'
+
   zstyle ':prezto:module:git:info:added' format '%F{yellow}'
   zstyle ':prezto:module:git:info:ahead' format '↑'
   zstyle ':prezto:module:git:info:behind' format '↓'
