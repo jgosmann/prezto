@@ -71,3 +71,6 @@ bindkey -M menuselect '^o' accept-and-infer-next-history
 
 lesskey ~/.zprezto/lesskey
 
+if [[ -s "${HOME}/virt_env/default/bin/activate" ]]; then
+  source "${HOME}/virt_env/default/bin/activate"
+fi
