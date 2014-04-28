@@ -158,6 +158,9 @@ zstyle ':prezto:module:prompt' theme 'jgosmann'
 # Set the tab title format.
 # zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
 
+# Set the terminal multiplexer title format.
+# zstyle ':prezto:module:terminal:multiplexer-title' format '%s'
+
 #
 # Tmux
 #
