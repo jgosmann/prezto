@@ -36,6 +36,8 @@ fi
 typeset -gU cdpath fpath mailpath path
 typeset -gUT CPATH cpath
 typeset -gUT LIBRARY_PATH library_path
+typeset -gUT INFOPATH infopath
+typeset -gU MANPATH manpath
 
 # Set the the list of directories that cd searches.
 # cdpath=(
@@ -69,6 +71,16 @@ case `uname` in
         export ARDUINO_DIR='/Applications/Arduino.app/Contents/Resources/Java'
         export ARDMK_DIR='~/bin/Arduino-Makefile'
         path=($path ~/bin/Arduino-Makefile/bin /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/ /Applications/MATLAB_R2010b.app/bin/)
+        ;;
+    *Linux*)
+        export PYENV_ROOT="${HOME}/.pyenv"
+        if [ -d "${PYENV_ROOT}" ]; then
+            path=("${PYENV_ROOT}/bin" $path)
+            eval "$(pyenv init -)"
+        fi
+        path=(/usr/local/texlive/2013/bin/x86_64-linux $path)
+        infopath=(/usr/local/texlive/2013/texmf-dist/doc/info $infopath)
+        manpath=(/usr/local/texlive/2013/texmf-dist/doc/man $manpath)
         ;;
 esac
 
