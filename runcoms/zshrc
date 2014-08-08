@@ -71,6 +71,9 @@ bindkey -M menuselect '^o' accept-and-infer-next-history
 
 lesskey ~/.zprezto/lesskey
 
-if [[ -s "${HOME}/virt_env/default/bin/activate" ]]; then
-  source "${HOME}/virt_env/default/bin/activate"
+export VIRTUALENVWRAPPER_SCRIPT="/home/jgosmann/.pyenv/versions/2.7.6/bin/virtualenvwrapper.sh"
+if [[ -s "${VIRTUALENVWRAPPER_SCRIPT}" ]]; then
+    export WORKON_HOME="${HOME}/.virtualenvs"
+    export PROJECT_HOME="${HOME}/Documents/projects"
+    source "${VIRTUALENVWRAPPER_SCRIPT}"
 fi
