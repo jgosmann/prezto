@@ -76,3 +76,9 @@ if [[ -d ~/.pyenv/plugins/pyenv-virtualenvwrapper ]]; then
     export PROJECT_HOME="${HOME}/Documents/projects"
     pyenv virtualenvwrapper
 fi
+
+if [[ -x /opt/local/bin/virtualenvwrapper.sh-2.7 ]]; then
+    export WORKON_HOME="${HOME}/.virtualenvs"
+    export PROJECT_HOME="${HOME}/Documents/projects"
+    source /opt/local/bin/virtualenvwrapper.sh-2.7
+fi
