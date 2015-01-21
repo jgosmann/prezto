@@ -37,6 +37,10 @@ zstyle ':prezto:load' pmodule \
   'syntax-highlighting' \
   'prompt'
 
+# Directory
+
+unsetopt AUTO_CD
+
 #
 # Editor
 #
