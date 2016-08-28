@@ -100,7 +100,10 @@ case `uname` in
     *Darwin*)
         export ARDUINO_DIR='/Applications/Arduino.app/Contents/Resources/Java'
         export ARDMK_DIR='~/bin/Arduino-Makefile'
-        path=($path ~/Library/Python/2.7/bin ~/bin/Arduino-Makefile/bin /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/ /Applications/MATLAB_R2010b.app/bin/)
+        path=(/usr/local/texlive/2016/bin/x86_64-darwin $path)
+        path=($path ~/Library/Python/2.7/bin ~/.gem/ruby/2.0.0/bin ~/bin/Arduino-Makefile/bin /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin/ /Applications/MATLAB_R2010b.app/bin/)
+        source ~/.iterm2_shell_integration.`basename $SHELL`
+        export PYOPENCL_CTX='2'
         ;;
     *Linux*)
         export PYENV_ROOT="${HOME}/.pyenv"
@@ -114,6 +117,9 @@ case `uname` in
         export PYOPENCL_CTX='0'
         ;;
 esac
+
+infopath=(/usr/local/texlive/2016/texmf-dist/doc/info $infopath)
+manpath=(/usr/local/texlive/2016/texmf-dist/doc/man $manpath)
 
 cpath=(/opt/local/include $cpath)
 library_path=(/opt/local/lib $library_path)
