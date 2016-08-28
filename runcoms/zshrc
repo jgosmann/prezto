@@ -79,13 +79,16 @@ if [[ -d ~/.pyenv/plugins/pyenv-virtualenvwrapper ]]; then
     pyenv virtualenvwrapper
 fi
 
-if [[ -x /opt/local/bin/virtualenvwrapper.sh-2.7 ]]; then
+if [[ -x /opt/local/bin/virtualenvwrapper.sh-3.5 ]]; then
     export WORKON_HOME="${HOME}/.virtualenvs"
     export PROJECT_HOME="${HOME}/Documents/projects"
-    source /opt/local/bin/virtualenvwrapper.sh-2.7
+    source /opt/local/bin/virtualenvwrapper.sh-3.5
 fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+PERL_MB_OPT="--install_base \"/Volumes/Home/blubb/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Volumes/Home/blubb/perl5"; export PERL_MM_OPT;
 
 export TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'avg shared (code):         %X KB'$'\n'\
