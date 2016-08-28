@@ -108,9 +108,9 @@ case `uname` in
             path=("${PYENV_ROOT}/bin" $path)
             eval "$(pyenv init -)"
         fi
-        path=(/usr/local/texlive/2014/bin/x86_64-linux $path)
-        infopath=(/usr/local/texlive/2014/texmf-dist/doc/info $infopath)
-        manpath=(/usr/local/texlive/2014/texmf-dist/doc/man $manpath)
+        path=(/usr/local/texlive/2015/bin/x86_64-linux $path)
+        infopath=(/usr/local/texlive/2015/texmf-dist/doc/info $infopath)
+        manpath=(/usr/local/texlive/2015/texmf-dist/doc/man $manpath)
         ;;
 esac
 
