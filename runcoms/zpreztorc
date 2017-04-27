@@ -104,8 +104,8 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 # Auto set to 'off' on dumb terminals.
 zstyle ':prezto:module:prompt' theme 'jgosmann'
 
-# Display pwd in long format for themes that use promptpwd function
-# zstyle ':prezto:module:prompt' long-pwd 'yes'
+# Set how themes that use promptpwd function display the pwd, can be 'short', 'long', or 'full'
+# zstyle ':prezto:module:prompt' pwd-length 'short'
 
 #
 # Ruby
