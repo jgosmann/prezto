@@ -190,4 +190,4 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
     'pattern'
 
 # Set the default session name:
-# zstyle ':prezto:module:tmux' session 'YOUR DEFAULT SESSION NAME'
+# zstyle ':prezto:module:tmux:session' name 'YOUR DEFAULT SESSION NAME'
