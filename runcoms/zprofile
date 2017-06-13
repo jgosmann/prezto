@@ -84,6 +84,10 @@ fi
 #
 # Temporary Files
 #
+#
+if [[ -z "$TMPDIR" ]]; then
+  export TMPDIR="/tmp/zsh-$UID"
+fi
 
 if [[ ! -d "$TMPDIR" ]]; then
   export TMPDIR="/tmp/$(echo "$LOGNAME" | tr -d ' ')"
