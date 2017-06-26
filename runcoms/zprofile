@@ -85,12 +85,12 @@ fi
 # Temporary Files
 #
 #
-if [[ -z "$TMPDIR" ]]; then
-  export TMPDIR="/tmp/zsh-$UID"
+# Set TMPDIR if the variable is not set/empty or the directory doesn't exist
+if [[ -z "${TMPDIR}" ]]; then
+  export TMPDIR="/tmp/$(echo "$LOGNAME" | tr -d ' ')"
 fi
 
-if [[ ! -d "$TMPDIR" ]]; then
-  export TMPDIR="/tmp/$(echo "$LOGNAME" | tr -d ' ')"
+if [[ ! -d "${TMPDIR}" ]]; then
   mkdir -p -m 700 "$TMPDIR"
 fi
 
