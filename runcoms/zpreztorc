@@ -130,6 +130,9 @@ zstyle ':prezto:module:prompt' theme 'jgosmann'
 # Auto switch the Python virtualenv on directory change.
 # zstyle ':prezto:module:python:virtualenv' auto-switch 'yes'
 
+# Automatically initialize virtualenvwrapper if pre-requisites are met.
+# zstyle ':prezto:module:python:virtualenv' initialize 'yes'
+
 #
 # Screen
 #
