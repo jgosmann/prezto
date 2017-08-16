@@ -54,7 +54,7 @@ typeset -gUT LIBRARY_PATH library_path
 typeset -gUT INFOPATH infopath
 typeset -gU MANPATH manpath
 
-# Set the the list of directories that cd searches.
+# Set the list of directories that cd searches.
 # cdpath=(
 #   $cdpath
 # )
