@@ -86,7 +86,7 @@ fi
 #
 
 if [[ ! -d "$TMPDIR" ]]; then
-  export TMPDIR="/tmp/$LOGNAME"
+  export TMPDIR="/tmp/$(echo "$LOGNAME" | tr -d ' ')"
   mkdir -p -m 700 "$TMPDIR"
 fi
 
