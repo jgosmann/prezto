@@ -113,6 +113,8 @@ case `uname` in
         manpath=(/usr/local/texlive/2015/texmf-dist/doc/man $manpath)
         export PYOPENCL_CTX='0'
         ;;
+    *NT*)
+        path=(/c/Program\ Files\ \(x86\)/GnuPG/bin $path)
 esac
 
 infopath=(/usr/local/texlive/2016/texmf-dist/doc/info $infopath)
