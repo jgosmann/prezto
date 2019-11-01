@@ -79,10 +79,10 @@ if [[ -d ~/.pyenv/plugins/pyenv-virtualenvwrapper ]]; then
     pyenv virtualenvwrapper
 fi
 
-if [[ -x /opt/local/bin/virtualenvwrapper.sh-3.6 ]]; then
+if [[ -x /opt/local/bin/virtualenvwrapper.sh-3.7 ]]; then
     export WORKON_HOME="${HOME}/.virtualenvs"
     export PROJECT_HOME="${HOME}/Documents/projects"
-    source /opt/local/bin/virtualenvwrapper.sh-3.6
+    source /opt/local/bin/virtualenvwrapper.sh-3.7
 fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
