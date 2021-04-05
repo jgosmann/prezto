@@ -81,21 +81,6 @@ if (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
-#
-# Temporary Files
-#
-#
-# Set TMPDIR if the variable is not set/empty or the directory doesn't exist
-if [[ -z "${TMPDIR}" ]]; then
-  export TMPDIR="/tmp/$(echo "$LOGNAME" | tr -d ' ')"
-fi
-
-if [[ ! -d "${TMPDIR}" ]]; then
-  mkdir -p -m 700 "$TMPDIR"
-fi
-
-TMPPREFIX="${TMPDIR%/}/zsh"
-
 
 export PYENV_ROOT="${HOME}/.pyenv"
 if [ -d "${PYENV_ROOT}" ]; then

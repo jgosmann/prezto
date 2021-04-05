@@ -14,8 +14,7 @@ fi
 # Options
 #
 
-# Beep on error in line editor.
-setopt BEEP
+setopt BEEP                     # Beep on error in line editor.
 
 #
 # Variables
@@ -92,28 +91,32 @@ function bindkey-all {
 # Exposes information about the Zsh Line Editor via the $editor_info associative
 # array.
 function editor-info {
-  # Clean up previous $editor_info.
-  unset editor_info
-  typeset -gA editor_info
+  # Ensure that we're going to set the editor-info for prompts that
+  # are prezto managed and/or compatible.
+  if zstyle -t ':prezto:module:prompt' managed; then
+    # Clean up previous $editor_info.
+    unset editor_info
+    typeset -gA editor_info
 
-  if [[ "$KEYMAP" == 'vicmd' ]]; then
-    zstyle -s ':prezto:module:editor:info:keymap:alternate' format 'REPLY'
-    editor_info[keymap]="$REPLY"
-  else
-    zstyle -s ':prezto:module:editor:info:keymap:primary' format 'REPLY'
-    editor_info[keymap]="$REPLY"
-
-    if [[ "$ZLE_STATE" == *overwrite* ]]; then
-      zstyle -s ':prezto:module:editor:info:keymap:primary:overwrite' format 'REPLY'
-      editor_info[overwrite]="$REPLY"
+    if [[ "$KEYMAP" == 'vicmd' ]]; then
+      zstyle -s ':prezto:module:editor:info:keymap:alternate' format 'REPLY'
+      editor_info[keymap]="$REPLY"
     else
-      zstyle -s ':prezto:module:editor:info:keymap:primary:insert' format 'REPLY'
-      editor_info[overwrite]="$REPLY"
-    fi
-  fi
+      zstyle -s ':prezto:module:editor:info:keymap:primary' format 'REPLY'
+      editor_info[keymap]="$REPLY"
 
-  unset REPLY
-  zle zle-reset-prompt
+      if [[ "$ZLE_STATE" == *overwrite* ]]; then
+        zstyle -s ':prezto:module:editor:info:keymap:primary:overwrite' format 'REPLY'
+        editor_info[overwrite]="$REPLY"
+      else
+        zstyle -s ':prezto:module:editor:info:keymap:primary:insert' format 'REPLY'
+        editor_info[overwrite]="$REPLY"
+      fi
+    fi
+
+    unset REPLY
+    zle zle-reset-prompt
+  fi
 }
 zle -N editor-info
 
@@ -211,6 +214,14 @@ zle -N expand-dot-to-parent-directory-path
 function expand-or-complete-with-indicator {
   local indicator
   zstyle -s ':prezto:module:editor:info:completing' format 'indicator'
+
+  # This is included to work around a bug in zsh which shows up when interacting
+  # with multi-line prompts.
+  if [[ -z "$indicator" ]]; then
+    zle expand-or-complete
+    return
+  fi
+
   print -Pn "$indicator"
   zle expand-or-complete
   zle redisplay
@@ -234,6 +245,27 @@ function glob-alias {
 }
 zle -N glob-alias
 
+# Toggle the comment character at the start of the line. This is meant to work
+# around a buggy implementation of pound-insert in zsh.
+#
+# This is currently only used for the emacs keys because vi-pound-insert has
+# been reported to work properly.
+function pound-toggle {
+  if [[ "$BUFFER" = '#'* ]]; then
+    # Because of an oddity in how zsh handles the cursor when the buffer size
+    # changes, we need to make this check before we modify the buffer and let
+    # zsh handle moving the cursor back if it's past the end of the line.
+    if [[ $CURSOR != $#BUFFER ]]; then
+      (( CURSOR -= 1 ))
+    fi
+    BUFFER="${BUFFER:1}"
+  else
+    BUFFER="#$BUFFER"
+    (( CURSOR += 1 ))
+  fi
+}
+zle -N pound-toggle
+
 # Reset to default key bindings.
 bindkey -d
 
@@ -241,9 +273,11 @@ bindkey -d
 # Emacs Key Bindings
 #
 
-for key in "$key_info[Escape]"{B,b} "${(s: :)key_info[ControlLeft]}"
+for key in "$key_info[Escape]"{B,b} "${(s: :)key_info[ControlLeft]}" \
+  "${key_info[Escape]}${key_info[Left]}"
   bindkey -M emacs "$key" emacs-backward-word
-for key in "$key_info[Escape]"{F,f} "${(s: :)key_info[ControlRight]}"
+for key in "$key_info[Escape]"{F,f} "${(s: :)key_info[ControlRight]}" \
+  "${key_info[Escape]}${key_info[Right]}"
   bindkey -M emacs "$key" emacs-forward-word
 
 # Kill to the beginning of the line.
@@ -269,6 +303,12 @@ if (( $+widgets[history-incremental-pattern-search-backward] )); then
     history-incremental-pattern-search-forward
 fi
 
+# Toggle comment at the start of the line. Note that we use pound-toggle which
+# is similar to pount insert, but meant to work around some issues that were
+# being seen in iTerm.
+bindkey -M emacs "$key_info[Escape];" pound-toggle
+
+
 #
 # Vi Key Bindings
 #
@@ -287,6 +327,9 @@ else
   bindkey -M vicmd "?" history-incremental-search-backward
   bindkey -M vicmd "/" history-incremental-search-forward
 fi
+
+# Toggle comment at the start of the line.
+bindkey -M vicmd "#" vi-pound-insert
 
 #
 # Emacs and Vi Key Bindings
