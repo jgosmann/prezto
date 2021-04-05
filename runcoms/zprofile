@@ -97,6 +97,7 @@ fi
 TMPPREFIX="${TMPDIR%/}/zsh"
 
 
+path=($path ~/.poetry/bin ~/.cargo/bin)
 case `uname` in
     *Darwin*)
         export ARDUINO_DIR='/Applications/Arduino.app/Contents/Resources/Java'
