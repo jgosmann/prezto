@@ -121,3 +121,7 @@ if [[ $(uname) == *NT* ]]; then
 
     unset env
 fi
+
+if type starship > /dev/null; then
+    eval "$(starship init zsh)"
+fi
