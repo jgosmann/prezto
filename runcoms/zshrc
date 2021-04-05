@@ -29,17 +29,6 @@ alias cp='nocorrect cp'
 alias rm='nocorrect rm'
 alias mv='nocorrect mv'
 
-alias gsr='git svn rebase'
-alias gsd='git svn dcommit --rmdir'
-
-alias make='make -j 2'
-
-alias mysqlstart="sudo /opt/local/bin/mysqld_safe5"
-alias mysqlstop="/opt/local/bin/mysqladmin5 -u root --password='' shutdown"
-
-alias postgres-restart="sudo -u postgres /Library/PostgreSQL/9.0/bin/pg_ctl -D /Library/PostgreSQL/9.0/data restart"
-alias postgres-kill="ps -A | grep postgres | cut -f 1 -d ' ' | xargs sudo kill"
-
 alias sll='smt list -l | less'
 
 if ! (type -p netcat > /dev/null); then
@@ -82,11 +71,6 @@ elif [[ -x /opt/local/Library/Frameworks/Python.framework/Versions/Current/bin/v
     export PROJECT_HOME="${HOME}/Documents/projects"
     source /opt/local/Library/Frameworks/Python.framework/Versions/Current/bin/virtualenvwrapper.sh
 fi
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-PERL_MB_OPT="--install_base \"/Volumes/Home/blubb/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/Volumes/Home/blubb/perl5"; export PERL_MM_OPT;
 
 export TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'avg shared (code):         %X KB'$'\n'\
