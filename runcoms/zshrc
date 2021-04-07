@@ -108,4 +108,5 @@ fi
 
 if type starship > /dev/null; then
     eval "$(starship init zsh)"
+    export RPROMPT='$(STARSHIP_CONFIG=~/.config/starship-right.toml starship prompt)'
 fi
