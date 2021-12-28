@@ -101,6 +101,9 @@ case `uname` in
         path=(/c/Program\ Files\ \(x86\)/GnuPG/bin $path)
 esac
 
+path=(/opt/local/libexec/gnubin /Applications/MySQLWorkbench.app/Contents/MacOS /Library/Java/JavaVirtualMachines/openjdk8-temurin/Contents/Home/bin $path)
+
+
 infopath=(/usr/local/texlive/2020/texmf-dist/doc/info $infopath)
 manpath=(/usr/local/texlive/2020/texmf-dist/doc/man $manpath)
 
