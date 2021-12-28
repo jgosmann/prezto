@@ -60,8 +60,6 @@ bindkey 'OM' accept-line
 zmodload zsh/complist # To be able to access menuselect keymap
 bindkey -M menuselect '^o' accept-and-infer-next-history
 
-lesskey ~/.zprezto/lesskey
-
 if [[ -d ~/.pyenv/plugins/pyenv-virtualenvwrapper ]]; then
     export WORKON_HOME="${HOME}/.virtualenvs"
     export PROJECT_HOME="${HOME}/Documents/projects"
