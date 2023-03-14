@@ -93,7 +93,7 @@ path=($path ~/.poetry/bin ~/.cargo/bin)
 case `uname` in
     *Darwin*)
         path=(/usr/local/texlive/2020/bin/x86_64-darwin $path)
-        path=($path ~/Library/Python/3.8/bin /Applications/git-annex.app/Contents/MacOS)
+        path=($path ~/Library/Python/3.11/bin /Applications/git-annex.app/Contents/MacOS)
         ;;
     *Linux*)
         ;;
